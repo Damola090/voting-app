@@ -25,9 +25,12 @@ pub mod voting {
 
     pub fn initialize_candidate(ctx: Context<InitializeCandidate>, 
                                 candidate_name: String,
-                                poll_id: u64)-> Result<()> {
-        Ok(())
+                                _poll_id: u64)-> Result<()> {
 
+        let candidate = &mut ctx.accounts.candidate;
+        candidate.candidate_name = candidate_name;
+        candidate.candidate_votes = 0;
+        Ok(())
     }
     
 }
@@ -87,7 +90,7 @@ pub struct Poll {
 #[account]
 #[derive(InitSpace)]
 pub struct Candidate {
-    #[max_len(280)]
+    #[max_len(32)]
     pub candidate_name: String,
     pub candidate_votes: u64,
 }
